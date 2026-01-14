@@ -1,0 +1,23 @@
+config:
+  target: "http://localhost:3000/api/v1"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up phase
+    - duration: 60
+      arrivalRate: 10
+      name: Ramp up phase
+    - duration: 120
+      arrivalRate: 50
+      name: Load phase
+
+scenarios:
+  - name: "Health check & Public endpoints"
+    flow:
+      - get:
+          url: "/health"
+      - post:
+          url: "/auth/login"
+          json:
+            email: "test@example.com"
+            password: "password123"
